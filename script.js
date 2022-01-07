@@ -103,6 +103,34 @@ function playRound(playerSelection, computerSelection){
     
 }
 
+function checkForEnd(){
+
+    result = playRound(player,computer);
+    if(result === "COMPUTER WINS!")
+    {
+    computerScore++;
+    displayScoreText.textContent = `Player ${playerScore} - ${computerScore} Computer`;
+    }
+    else if(result === "PLAYER WINS!")
+    {
+    playerScore++;
+    displayScoreText.textContent = `Player ${playerScore} - ${computerScore} Computer`;
+    }
+    if(playerScore === 5){
+        displayWinnerText.textContent = 'PLAYER WINS THE WHOLE GAME , PRESS TO RESTART!!';
+        computerScore = 0;
+        playerScore = 0;
+        console.log("PLAYER WINS THE WHOLE GAME , PRESS TO RESTART!!")
+    }
+    else if(computerScore === 5){
+        displayWinnerText.textContent = 'COMPUTER WINS THE WHOLE GAME, PRESS TO RESTART!';
+        computerScore = 0;
+        playerScore = 0;
+        console.log("COMPUTER WINS THE WHOLE GAME, PRESS TO RESTART!")
+    }
+
+}
+
 let computerScore = 0;
 let playerScore = 0;
 let result;
@@ -111,56 +139,36 @@ const rockBtn = document.querySelector("#rock");
 const paperBtn = document.querySelector("#paper");
 const scisorBtn = document.querySelector("#scisor");
 
+const displayWinnerContainer = document.querySelector('#displayWinner');
+const displayScoreContainer = document.querySelector('#displayScore')
 
-// while(computerScore != 5 && playerScore !=5){
-//     let player = playerChose();
-//     let computer = computerPlay();
-//     console.log("Computer choses: " + computer);
-//     console.log("Player choses: " + player);
-//     result = playRound(player,computer);
-//     if(result === "tie!")
-//     {
-//         continue;
-//     }
-//     else if(result === "COMPUTER WINS!")
-//     {
-//         computerScore++;
-//     }
-//     else if(result === "PLAYER WINS!")
-//     {
-//         playerScore++;
-//     }
-// }
+const displayWinnerText = document.createElement('div');
+displayWinnerText.textContent = 'Winner';
 
-// if(playerScore === 5){
-//     console.log("PLAYER WINS THE WHOLE GAME!")
-// }
-// else{
-//     console.log("COMPUTER WINS THE WHOLE GAME!")
-// }
+const displayScoreText = document.createElement('div');
+displayScoreText.textContent = `Player ${playerScore} - ${computerScore} Computer`;
 
-    const displayWinnerContainer = document.querySelector('#displayWinner');
 
-    const displayWinnerText = document.createElement('div');
-    displayWinnerText.textContent = 'Winner: ';
+displayWinnerContainer.appendChild(displayWinnerText);
+displayScoreContainer.appendChild(displayScoreText);
 
-    displayWinnerContainer.appendChild(displayWinnerText);
+let player;
+let computer;
 
-    let player;
-    let computer;
+rockBtn.addEventListener( 'click', () => {
+    player = "rock";
+    computer = computerPlay();
+    checkForEnd();
+});
+paperBtn.addEventListener( 'click', () => {
+    player = "paper";
+    computer = computerPlay();
+    checkForEnd();
+});
+scisorBtn.addEventListener( 'click', () => {
+    player = "scisor";
+    computer = computerPlay();
+    checkForEnd();
+});
 
-    rockBtn.addEventListener( 'click', () => {
-        player = "rock";
-        computer = computerPlay();
-        result = playRound(player,computer);
-    });
-    paperBtn.addEventListener( 'click', () => {
-        player = "paper";
-        computer = computerPlay();
-        result = playRound(player,computer);
-    });
-    paperBtn.addEventListener( 'click', () => {
-        player = "scisor";
-        computer = computerPlay();
-        result = playRound(player,computer);
-    });
+
